@@ -14,3 +14,4 @@ cypress/videos
 cypress/screenshots
 .idea
 *.iml
+.history

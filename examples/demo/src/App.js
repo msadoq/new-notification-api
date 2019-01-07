@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Admin, Resource } from 'react-admin';
+import { fetchUtils, Admin, Resource } from 'react-admin';
 
 import './App.css';
 
@@ -12,6 +12,7 @@ import Menu from './Menu';
 import { Dashboard } from './dashboard';
 import customRoutes from './routes';
 import englishMessages from './i18n/en';
+import simpleRestProvider from './ra-data-simple-rest';
 
 import {
     VisitorList,
@@ -30,7 +31,7 @@ import { CategoryList, CategoryEdit, CategoryIcon } from './categories';
 import { ReviewList, ReviewEdit, ReviewIcon } from './reviews';
 
 import dataProviderFactory from './dataProvider';
-import fakeServerFactory from './fakeServer';
+// import fakeServerFactory from './fakeServer';
 
 const i18nProvider = locale => {
     if (locale === 'fr') {
@@ -41,18 +42,30 @@ const i18nProvider = locale => {
     return englishMessages;
 };
 
+
+const httpClient = (url, options = {}) => {
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    options.headers.set('content-range', 10);
+    const token = localStorage.getItem('token');
+    options.headers.set('X-Authorization', `Bearer ${token}`);
+    return fetchUtils.fetchJson(url, options);
+};
+
 class App extends Component {
     state = { dataProvider: null };
-
+    //
     async componentWillMount() {
-        this.restoreFetch = await fakeServerFactory(
-            process.env.REACT_APP_DATA_PROVIDER
-        );
-
+        // this.restoreFetch = await fakeServerFactory(
+        //     process.env.REACT_APP_DATA_PROVIDER
+        // );
+    
         const dataProvider = await dataProviderFactory(
             process.env.REACT_APP_DATA_PROVIDER
         );
-
+        this.restoreFetch = dataProvider;
+    
         this.setState({ dataProvider });
     }
 
@@ -62,7 +75,7 @@ class App extends Component {
 
     render() {
         const { dataProvider } = this.state;
-
+        
         if (!dataProvider) {
             return (
                 <div className="loader-container">
@@ -74,7 +87,7 @@ class App extends Component {
         return (
             <Admin
                 title="Posters Galore Admin"
-                dataProvider={dataProvider}
+                dataProvider={simpleRestProvider('http://localhost:8080/api/v1', httpClient)}
                 customReducers={{ theme: themeReducer }}
                 customSagas={sagas}
                 customRoutes={customRoutes}
