@@ -57,7 +57,7 @@ const MobileGrid = withStyles(listStyles)(
                             )}&nbsp;
                             <DateField
                                 record={data[id]}
-                                source="last_seen"
+                                source="lastSeen"
                                 type="date"
                             />
                         </div>

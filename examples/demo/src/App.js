@@ -12,7 +12,7 @@ import Menu from './Menu';
 import { Dashboard } from './dashboard';
 import customRoutes from './routes';
 import englishMessages from './i18n/en';
-import simpleRestProvider from './ra-data-simple-rest';
+import simpleRestProvider from './simpleRestProvider';
 
 import {
     VisitorList,
@@ -42,17 +42,6 @@ const i18nProvider = locale => {
     return englishMessages;
 };
 
-
-const httpClient = (url, options = {}) => {
-    if (!options.headers) {
-        options.headers = new Headers({ Accept: 'application/json' });
-    }
-    options.headers.set('content-range', 10);
-    const token = localStorage.getItem('token');
-    options.headers.set('X-Authorization', `Bearer ${token}`);
-    return fetchUtils.fetchJson(url, options);
-};
-
 class App extends Component {
     state = { dataProvider: null };
     //
@@ -64,8 +53,7 @@ class App extends Component {
         const dataProvider = await dataProviderFactory(
             process.env.REACT_APP_DATA_PROVIDER
         );
-        this.restoreFetch = dataProvider;
-    
+        
         this.setState({ dataProvider });
     }
 
@@ -87,7 +75,7 @@ class App extends Component {
         return (
             <Admin
                 title="Posters Galore Admin"
-                dataProvider={simpleRestProvider('http://localhost:8080/api/v1', httpClient)}
+                dataProvider={simpleRestProvider('http://localhost:8080/api/v1')}
                 customReducers={{ theme: themeReducer }}
                 customSagas={sagas}
                 customRoutes={customRoutes}

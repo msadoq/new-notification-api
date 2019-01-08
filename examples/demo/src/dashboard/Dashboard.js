@@ -121,7 +121,7 @@ class Dashboard extends Component {
                         has_ordered: true,
                         first_seen_gte: aMonthAgo.toISOString(),
                     },
-                    sort: { field: 'first_seen', order: 'DESC' },
+                    sort: { field: 'firstSeen', order: 'DESC' },
                     pagination: { page: 1, perPage: 100 },
                 })
                     .then(response => response.data)

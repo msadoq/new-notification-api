@@ -1,4 +1,4 @@
-import simpleRestProvider from '../ra-data-simple-rest';
+import simpleRestProvider from '../simpleRestProvider';
 
 const restProvider = simpleRestProvider('http://localhost:8080/api/v1');
 export default (type, resource, params) =>

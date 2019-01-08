@@ -40,7 +40,7 @@ const VisitorFilter = props => (
         <SearchInput source="q" alwaysOn />
         <DateInput source="last_seen_gte" />
         <NullableBooleanInput source="has_ordered" />
-        <NullableBooleanInput source="has_newsletter" defaultValue />
+        <NullableBooleanInput source="hasNewsletter" defaultValue />
         <SegmentInput />
     </Filter>
 );
@@ -71,7 +71,7 @@ export const VisitorList = withStyles(listStyles)(({ classes, ...props }) => (
     <List
         {...props}
         filters={<VisitorFilter />}
-        sort={{ field: 'last_seen', order: 'DESC' }}
+        sort={{ field: 'lastSeen', order: 'DESC' }}
         perPage={25}
     >
         <Responsive
@@ -79,7 +79,7 @@ export const VisitorList = withStyles(listStyles)(({ classes, ...props }) => (
             medium={
                 <Datagrid>
                     <CustomerLinkField />
-                    <DateField source="last_seen" type="date" />
+                    <DateField source="lastSeen" type="date" />
                     <NumberField
                         source="nb_commands"
                         label="resources.customers.fields.commands"
@@ -189,7 +189,7 @@ export const VisitorEdit = withStyles(editStyles)(({ classes, ...props }) => (
                 <SegmentsInput />
                 <NullableBooleanInput source="has_newsletter" />
                 <DateField
-                    source="first_seen"
+                    source="firstSeen"
                     style={{ width: 128, display: 'inline-block' }}
                 />
                 <DateField
@@ -197,7 +197,7 @@ export const VisitorEdit = withStyles(editStyles)(({ classes, ...props }) => (
                     style={{ width: 128, display: 'inline-block' }}
                 />
                 <DateField
-                    source="last_seen"
+                    source="lastSeen"
                     style={{ width: 128, display: 'inline-block' }}
                 />
             </FormTab>

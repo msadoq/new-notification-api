@@ -11,6 +11,16 @@ import {
     DELETE,
     DELETE_MANY,
 } from 'react-admin';
+import { map } from 'lodash';
+
+const httpClient = (url, options = {}) => {
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    const token = localStorage.getItem('token');
+    options.headers.set('x-authorization', `Bearer ${token}`);
+    return fetchUtils.fetchJson(url, options);
+};
 
 /**
  * Maps react-admin queries to a simple REST API
@@ -25,7 +35,7 @@ import {
  * CREATE       => POST http://my.api.url/posts
  * DELETE       => DELETE http://my.api.url/posts/123
  */
-export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
+export default (apiUrl) => {
     /**
      * @param {String} type One of the constants appearing at the top if this file, e.g. 'UPDATE'
      * @param {String} resource Name of the resource to fetch, e.g. 'posts'
@@ -40,7 +50,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 const { page, perPage } = params.pagination;
                 const { field, order } = params.sort;
                 const query = {
-                    sort: JSON.stringify([field, order]),
+                    sort: `${field},${order}`,
                     range: JSON.stringify([
                         (page - 1) * perPage,
                         page * perPage - 1,
@@ -52,10 +62,12 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
             }
             case GET_ONE:
                 url = `${apiUrl}/${resource}/${params.id}`;
+                //console.error("----->", params)
                 break;
             case GET_MANY: {
+                const idList = map(params.ids, (entity) => (entity.id))
                 const query = {
-                    filter: JSON.stringify({ id: params.ids }),
+                    filter: JSON.stringify({ id: idList }),
                 };
                 url = `${apiUrl}/${resource}?${stringify(query)}`;
                 break;
@@ -64,7 +76,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 const { page, perPage } = params.pagination;
                 const { field, order } = params.sort;
                 const query = {
-                    sort: JSON.stringify([field, order]),
+                    sort: `${field},${order}`,
                     range: JSON.stringify([
                         (page - 1) * perPage,
                         page * perPage - 1,
@@ -104,30 +116,21 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
      * @param {Object} params The data request params, depending on the type
      * @returns {Object} Data response
      */
-    const convertHTTPResponse = (response, type, resource, params) => {
-        const { headers, json } = response;
+    const convertHTTPResponse = (response, type, params) => {
+        const { json } = response;
         switch (type) {
             case GET_LIST:
             case GET_MANY_REFERENCE:
-                if (!headers.has('content-range')) {
-                    throw new Error(
-                        'The Content-Range header is missing in the HTTP Response. The simple REST data provider expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare Content-Range in the Access-Control-Expose-Headers header?'
-                    );
-                }
+            case GET_MANY:
+                //console.error("Recuperer le nombre delement", json);
                 return {
-                    data: json,
-                    total: parseInt(
-                        headers
-                            .get('content-range')
-                            .split('/')
-                            .pop(),
-                        10
-                    ),
+                    data: json.content,
+                    total: json.total,
                 };
             case CREATE:
                 return { data: { ...params.data, id: json.id } };
             default:
-                return { data: json };
+                return { data: json.content[0] };
         }
     };
 
@@ -170,7 +173,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
             params
         );
         return httpClient(url, options).then(response =>
-            convertHTTPResponse(response, type, resource, params)
+            convertHTTPResponse(response, type, params)
         );
     };
 };
