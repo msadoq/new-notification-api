@@ -86,11 +86,11 @@ export const VisitorList = withStyles(listStyles)(({ classes, ...props }) => (
                         className={classes.nb_commands}
                     />
                     <ColoredNumberField
-                        source="total_spent"
+                        source="totalSpent"
                         options={{ style: 'currency', currency: 'USD' }}
                     />
-                    <DateField source="latest_purchase" showTime />
-                    <BooleanField source="has_newsletter" label="News." />
+                    <DateField source="latestPurchase" showTime />
+                    <BooleanField source="hasNewsletter" label="News." />
                     <SegmentsField />
                     <EditButton />
                 </Datagrid>
@@ -187,17 +187,17 @@ export const VisitorEdit = withStyles(editStyles)(({ classes, ...props }) => (
             </FormTab>
             <FormTab label="resources.customers.tabs.stats" path="stats">
                 <SegmentsInput />
-                <NullableBooleanInput source="has_newsletter" />
+                <NullableBooleanInput source="hasNewsletter" />
                 <DateField
-                    source="firstSeen"
+                    source="first_seen"
                     style={{ width: 128, display: 'inline-block' }}
                 />
                 <DateField
-                    source="latest_purchase"
+                    source="latestPurchase"
                     style={{ width: 128, display: 'inline-block' }}
                 />
                 <DateField
-                    source="lastSeen"
+                    source="last_seen"
                     style={{ width: 128, display: 'inline-block' }}
                 />
             </FormTab>

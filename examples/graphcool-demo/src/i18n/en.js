@@ -36,7 +36,7 @@ export default {
             fields: {
                 commands: 'Orders',
                 groups: 'Segments',
-                lastSeen_gte: 'Visited Since',
+                last_seen_gte: 'Visited Since',
                 name: 'Name',
                 latestPurchase: 'Latest Purchase',
                 hasOrdered: 'Has Ordered',

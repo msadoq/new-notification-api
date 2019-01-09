@@ -36,7 +36,7 @@ export const VisitorIcon = Icon;
 const VisitorFilter = props => (
     <Filter {...props}>
         <SearchInput source="q" alwaysOn />
-        <DateInput source="lastSeen_gte" />
+        <DateInput source="last_seen_gte" />
         <NullableBooleanInput source="hasOrdered" />
         <NullableBooleanInput source="hasNewsletter" defaultValue />
     </Filter>
@@ -64,7 +64,7 @@ export const VisitorList = props => (
     <List
         {...props}
         filters={<VisitorFilter />}
-        sort={{ field: 'lastSeen', order: 'DESC' }}
+        sort={{ field: 'last_seen', order: 'DESC' }}
         perPage={25}
     >
         <Responsive
@@ -72,7 +72,7 @@ export const VisitorList = props => (
             medium={
                 <Datagrid>
                     <CustomerLinkField />
-                    <DateField source="lastSeen" type="date" />
+                    <DateField source="last_seen" type="date" />
                     <NumberField
                         source="nbCommands"
                         label="resources.Customer.fields.commands"
@@ -176,12 +176,12 @@ export const VisitorEdit = withStyles(editStyles)(({ classes, ...props }) => (
             </FormTab>
             <FormTab label="resources.Customer.tabs.stats" path="stats">
                 <NullableBooleanInput source="hasNewsletter" />
-                <DateField source="firstSeen" formClassName={classes.date} />
+                <DateField source="first_seen" formClassName={classes.date} />
                 <DateField
                     source="latestPurchase"
                     formClassName={classes.date}
                 />
-                <DateField source="lastSeen" formClassName={classes.date} />
+                <DateField source="last_seen" formClassName={classes.date} />
             </FormTab>
         </TabbedForm>
     </Edit>

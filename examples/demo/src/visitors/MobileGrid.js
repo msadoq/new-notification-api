@@ -57,7 +57,7 @@ const MobileGrid = withStyles(listStyles)(
                             )}&nbsp;
                             <DateField
                                 record={data[id]}
-                                source="lastSeen"
+                                source="last_seen"
                                 type="date"
                             />
                         </div>
@@ -78,7 +78,7 @@ const MobileGrid = withStyles(listStyles)(
                             )}&nbsp; :{' '}
                             <ColoredNumberField
                                 record={data[id]}
-                                source="total_spent"
+                                source="totalSpent"
                                 options={{ style: 'currency', currency: 'USD' }}
                             />
                         </div>

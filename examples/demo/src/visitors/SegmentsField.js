@@ -8,18 +8,22 @@ const styles = {
     chip: { margin: 4 },
 };
 
-const SegmentsField = ({ record, translate }) => (
+const SegmentsField = ({ record, translate }) => {
+    //console.error(record);
+    return ( 
+
     <span style={styles.main}>
-        {record.groups &&
+        {   record.groups &&
             record.groups.map(segment => (
                 <Chip
-                    key={segment}
+                    key={segment.id}
                     style={styles.chip}
-                    label={translate(segments.find(s => s.id === segment).name)}
+                    label={translate(segments.find(s => s.id === segment.id).name)}
                 />
             ))}
     </span>
-);
+    )}
+;
 
 const TranslatedSegmentsField = translate(SegmentsField);
 
