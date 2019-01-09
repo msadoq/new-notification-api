@@ -67,7 +67,7 @@ const MobileGrid = withStyles(listStyles)(
                                 parseInt(data[id].nb_commands, 10) || 1
                             )}&nbsp;:&nbsp;<NumberField
                                 record={data[id]}
-                                source="nb_commands"
+                                source="nbCommands"
                                 label="resources.customers.fields.commands"
                                 className={classes.nb_commands}
                             />

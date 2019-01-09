@@ -81,7 +81,7 @@ export const VisitorList = withStyles(listStyles)(({ classes, ...props }) => (
                     <CustomerLinkField />
                     <DateField source="lastSeen" type="date" />
                     <NumberField
-                        source="nb_commands"
+                        source="nbCommands"
                         label="resources.customers.fields.commands"
                         className={classes.nb_commands}
                     />
