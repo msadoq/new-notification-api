@@ -74,7 +74,7 @@ class App extends Component {
 
         return (
             <Admin
-                title="Posters Galore Admin"
+                title="Notification Service Admin"
                 dataProvider={simpleRestProvider('http://localhost:8080/api/v1')}
                 customReducers={{ theme: themeReducer }}
                 customSagas={sagas}

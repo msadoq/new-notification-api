@@ -24,7 +24,7 @@ const mediaUrl = `https://marmelab.com/posters/beard-${parseInt(
 
 const Welcome = ({ classes, translate }) => (
     <Card>
-        <CardMedia image={mediaUrl} className={classes.media} />
+        {/*<CardMedia image={mediaUrl} className={classes.media} />*/}
         <CardContent>
             <Typography variant="headline" component="h2">
                 {translate('pos.dashboard.welcome.title')}

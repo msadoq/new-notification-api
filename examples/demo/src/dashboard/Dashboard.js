@@ -149,7 +149,7 @@ class Dashboard extends Component {
         } = this.state;
         return (
             <Fragment>
-                <Title title="Posters Galore Admin" />
+                <Title title="Notification Service Admin" />
                 <Responsive
                     xsmall={
                         <div>
