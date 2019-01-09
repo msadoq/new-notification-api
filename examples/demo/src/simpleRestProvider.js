@@ -51,10 +51,8 @@ export default (apiUrl) => {
                 const { field, order } = params.sort;
                 const query = {
                     sort: `${field},${order}`,
-                    range: JSON.stringify([
-                        (page - 1) * perPage,
-                        page * perPage - 1,
-                    ]),
+                    page: page,
+                    size: perPage,
                     filter: JSON.stringify(params.filter),
                 };
                 url = `${apiUrl}/${resource}?${stringify(query)}`;
@@ -77,10 +75,8 @@ export default (apiUrl) => {
                 const { field, order } = params.sort;
                 const query = {
                     sort: `${field},${order}`,
-                    range: JSON.stringify([
-                        (page - 1) * perPage,
-                        page * perPage - 1,
-                    ]),
+                    page: page,
+                    size: perPage,
                     filter: JSON.stringify({
                         ...params.filter,
                         [params.target]: params.id,
@@ -129,7 +125,12 @@ export default (apiUrl) => {
                 };
             case CREATE:
                 return { data: { ...params.data, id: json.id } };
+            case DELETE:
+                return {
+                    data:{}
+                }    
             default:
+                
                 return { data: json.content[0] };
         }
     };
