@@ -118,7 +118,7 @@ export default {
         reviews: {
             name: 'Commentaire |||| Commentaires',
             fields: {
-                customer_id: 'Client',
+                id: 'Client',
                 command_id: 'Commande',
                 product_id: 'Produit',
                 date_gte: 'Publié depuis',

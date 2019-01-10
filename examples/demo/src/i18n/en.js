@@ -34,6 +34,7 @@ export default {
         customers: {
             name: 'Customer |||| Customers',
             fields: {
+                id : "Customer",
                 commands: 'Orders',
                 groups: 'Segments',
                 last_seen_gte: 'Visited Since',

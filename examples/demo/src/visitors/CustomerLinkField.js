@@ -10,8 +10,7 @@ const CustomerLinkField = props => (
 );
 
 CustomerLinkField.defaultProps = {
-    source: 'customer_id',
-    addLabel: true,
+    source: 'id',
 };
 
 export default CustomerLinkField;
