@@ -18,7 +18,7 @@ const httpClient = (url, options = {}) => {
         options.headers = new Headers({ Accept: 'application/json' });
     }
     const token = localStorage.getItem('token');
-    options.headers.set('x-authorization', `Bearer ${token}`);
+    options.headers.set('X-Authorization', `Bearer ${token}`);
     return fetchUtils.fetchJson(url, options);
 };
 
